@@ -158,6 +158,10 @@ ruff check . && ruff format --check . && pytest --cov=dairy_platform
 
 See [docs/roadmap.md](docs/roadmap.md). In short: Feed Management, then Inventory & Stock, Herd integration, Reporting, a tenant admin portal, and analytics and optimisation where they are justified.
 
+## Contributing
+
+See [CONTRIBUTING.md](CONTRIBUTING.md) for the branch, review and testing workflow. Pull requests use the [PR template](.github/pull_request_template.md).
+
 ## License
 
 MIT
