@@ -21,6 +21,4 @@ class TenantContext:
 
     def ensure_owns(self, tenant_id: str, what: str = "resource") -> None:
         if tenant_id != self.tenant_id:
-            raise TenantIsolationError(
-                f"{what} belongs to tenant '{tenant_id}', not '{self.tenant_id}'"
-            )
+            raise TenantIsolationError(f"{what} belongs to tenant '{tenant_id}', not '{self.tenant_id}'")
