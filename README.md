@@ -1,5 +1,9 @@
 # Dairy Farm Management Platform
 
+[![CI](https://github.com/ahmedoraby-eng/dairy-farm-management-platform/actions/workflows/ci.yml/badge.svg)](https://github.com/ahmedoraby-eng/dairy-farm-management-platform/actions/workflows/ci.yml)
+![Python](https://img.shields.io/badge/python-3.10%E2%80%933.13-blue)
+![License](https://img.shields.io/badge/license-MIT-green)
+
 An open, **multi-tenant SaaS foundation for running dairy farm operations**: feeding, inventory, herd data and the integrations that connect them.
 
 The first module is **Feed Management**. It replaces spreadsheet-driven daily feeding calculations with configurable, traceable and testable domain logic. Further modules are added one at a time, behind clear integration boundaries.
@@ -131,6 +135,23 @@ Run the example calculation:
 
 ```bash
 python src/dairy_platform/feed_management/calculator.py
+```
+
+## Quality gates
+
+Every push and pull request runs [CI](.github/workflows/ci.yml):
+
+| Gate | Tool | Bar |
+|---|---|---|
+| Lint | `ruff check` (errors, imports, bug-prone patterns, modern syntax) | No findings |
+| Formatting | `ruff format --check` | Consistent formatting |
+| Tests | `pytest` on Python 3.10–3.13 | All pass |
+| Coverage | `pytest-cov` | ≥ 90% of `dairy_platform` |
+
+Run the same checks locally:
+
+```bash
+ruff check . && ruff format --check . && pytest --cov=dairy_platform
 ```
 
 ## Roadmap
