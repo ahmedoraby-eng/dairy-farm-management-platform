@@ -8,16 +8,23 @@ from dairy_platform.tenancy import TenantContext, TenantIsolationError
 
 def _ration(tenant_id="tenant-a", version=3):
     return RationVersion(
-        tenant_id=tenant_id, ration_id="lactating-high", version=version,
-        ration_per_head=20.0, mix_portion=0.5,
+        tenant_id=tenant_id,
+        ration_id="lactating-high",
+        version=version,
+        ration_per_head=20.0,
+        mix_portion=0.5,
     )
 
 
 def test_plan_keeps_inputs_and_ration_version_for_traceability():
     plan = build_daily_plan(
         TenantContext("tenant-a"),
-        site_id="site-1", feeding_group_id="group-lactating", feeding_date=date(2026, 10, 1),
-        head_count=100, feeding_rate=1.0, ration=_ration(),
+        site_id="site-1",
+        feeding_group_id="group-lactating",
+        feeding_date=date(2026, 10, 1),
+        head_count=100,
+        feeding_rate=1.0,
+        ration=_ration(),
     )
 
     assert plan.tenant_id == "tenant-a"
@@ -31,8 +38,12 @@ def test_cannot_use_another_tenants_ration():
     with pytest.raises(TenantIsolationError):
         build_daily_plan(
             TenantContext("tenant-a"),
-            site_id="site-1", feeding_group_id="group-1", feeding_date=date(2026, 10, 1),
-            head_count=100, feeding_rate=1.0, ration=_ration(tenant_id="tenant-b"),
+            site_id="site-1",
+            feeding_group_id="group-1",
+            feeding_date=date(2026, 10, 1),
+            head_count=100,
+            feeding_rate=1.0,
+            ration=_ration(tenant_id="tenant-b"),
         )
 
 
