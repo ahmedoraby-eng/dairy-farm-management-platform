@@ -1,0 +1,15 @@
+{
+  "tenant_id": "demo-tenant",
+  "farm_id": "demo-farm",
+  "site_id": "site-1",
+  "feeding_group_id": "lactating-group",
+  "feeding_date": "2026-10-01",
+  "head_count": 100,
+  "feeding_rate": 1.0,
+  "ration": {
+    "ration_id": "lactating-standard",
+    "version": 1,
+    "ration_per_head": 20.0,
+    "mix_portion": 0.5
+  }
+}
