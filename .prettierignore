@@ -1,0 +1,6 @@
+dist/
+coverage/
+package-lock.json
+# Prose and workflow files are reviewed by hand, not reformatted.
+*.md
+.github/

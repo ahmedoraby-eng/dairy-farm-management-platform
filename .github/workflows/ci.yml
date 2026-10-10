@@ -14,10 +14,11 @@ concurrency:
 
 jobs:
   ci:
-    # Shared standard from the engineering playbook: ruff lint and format,
-    # pytest on a Python version matrix, and a coverage gate.
-    uses: ahmedoraby-eng/engineering-playbook/.github/workflows/reusable-python-ci.yml@main
+    # Shared standard from the engineering playbook: clean install, then
+    # typecheck + lint + format + build, tests with a 90% coverage gate,
+    # and an audit of production dependencies. See ADR-004.
+    uses: ahmedoraby-eng/engineering-playbook/.github/workflows/reusable-node-ci.yml@main
     with:
-      python-versions: '["3.10", "3.11", "3.12", "3.13"]'
-      coverage-package: dairy_platform
-      coverage-min: 90
+      node-version: "22"
+      build-command: npm run check
+      test-command: npm run test:coverage
