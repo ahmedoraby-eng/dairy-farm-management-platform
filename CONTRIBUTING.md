@@ -15,17 +15,20 @@ Thanks for helping improve the platform. This page explains how changes move fro
 These are the same gates CI runs:
 
 ```bash
-pip install -r requirements-dev.txt
-ruff check . && ruff format --check . && pytest --cov=dairy_platform --cov-fail-under=90
+npm ci
+npm run check && npm run test:coverage
 ```
+
+`npm run format` fixes formatting. The stack and its rules are recorded in [ADR-004](docs/adr/004-language-and-stack.md).
 
 ## Engineering standards
 
-- **Domain logic stays pure.** Calculations in `feed_management` are deterministic and free of I/O, so they stay easy to test.
-- **Tenant safety first.** Anything tenant-scoped carries a `tenant_id` and is checked with `TenantContext.ensure_owns` before use. Add a cross-tenant test for every new aggregate.
+- **Domain logic stays pure.** Calculations in `src/feed-management` are deterministic and free of I/O, so they stay easy to test.
+- **Tenant safety first.** Anything tenant-scoped carries a `tenant_id` and is checked with `TenantContext.ensureOwns` before use. Add a cross-tenant test for every new aggregate.
 - **Configuration over code.** Farm-specific values (rations, rates, thresholds) are configuration, never constants.
+- **Types over comments.** Model rules in types and immutable data; avoid `any` and non-null assertions, which lint rejects.
 - **Record significant decisions** as an ADR in `docs/adr/` (context, decision, consequences).
-- **Tests describe behaviour.** Name tests after the rule they protect, e.g. `test_cannot_use_another_tenants_ration`.
+- **Tests describe behaviour.** Name tests after the rule they protect, e.g. `it("cannot use another tenant's ration")`.
 
 ## Commit messages
 

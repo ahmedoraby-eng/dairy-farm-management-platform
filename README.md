@@ -1,7 +1,8 @@
 # Dairy Farm Management Platform
 
 [![CI](https://github.com/ahmedoraby-eng/dairy-farm-management-platform/actions/workflows/ci.yml/badge.svg)](https://github.com/ahmedoraby-eng/dairy-farm-management-platform/actions/workflows/ci.yml)
-![Python](https://img.shields.io/badge/python-3.10%E2%80%933.13-blue)
+![TypeScript](https://img.shields.io/badge/TypeScript-strict-blue)
+![Node.js](https://img.shields.io/badge/Node.js-22%20LTS-green)
 ![License](https://img.shields.io/badge/license-MIT-green)
 
 An open, **multi-tenant SaaS foundation for running dairy farm operations**: feeding, inventory, herd data and the integrations that connect them.
@@ -80,7 +81,7 @@ Feed Units            x Ration per Head = Daily Net Requirement
 Daily Net Requirement x Mix Portion     = Mixer Load
 ```
 
-This is implemented as deterministic, side-effect-free domain logic in `src/dairy_platform/feed_management/calculator.py`. Farm-specific operational policies (for example leftover-based adjustments) are modelled as configuration and policies, not hard-coded into the calculator.
+This is implemented as deterministic, side-effect-free domain logic in `src/feed-management/calculator.ts`. Farm-specific operational policies (for example leftover-based adjustments) are modelled as configuration and policies, not hard-coded into the calculator.
 
 ## Multi-tenancy
 
@@ -95,19 +96,23 @@ This is implemented as deterministic, side-effect-free domain logic in `src/dair
 3. **Traceability.** Every daily plan can answer: *"Why did the system calculate this quantity?"*
 4. **Clear integration boundaries.** Herd, milk and finance systems sit behind adapters ([ADR-002](docs/adr/002-integration-boundaries.md)).
 5. **Incremental modernisation.** Replace the highest-value spreadsheet process first, then add modules one at a time.
+6. **One typed stack.** TypeScript on Node.js across services and front ends, with exceptions only by ADR ([ADR-004](docs/adr/004-language-and-stack.md)).
 
 ## Repository structure
 
 ```text
-src/dairy_platform/
-  tenancy.py                 # Tenant context and isolation guard
-  feed_management/
-    calculator.py            # Core feeding calculation chain
-    plan.py                  # Traceable, tenant-scoped daily feeding plan
+src/
+  errors.ts                  # ValidationError, TenantIsolationError
+  tenancy.ts                 # Tenant context and isolation guard
+  feed-management/
+    calculator.ts            # Core feeding calculation chain
+    plan.ts                  # Traceable, tenant-scoped daily feeding plan
+  examples/
+    daily-plan.ts            # Builds the sample plan and explains it
 
 tests/
-  test_calculator.py
-  test_plan.py
+  calculator.test.ts
+  plan.test.ts
 
 sample/
   daily_plan.json
@@ -120,21 +125,23 @@ docs/
     001-configuration-over-hard-coding.md
     002-integration-boundaries.md
     003-multi-tenancy-model.md
+    004-language-and-stack.md
 ```
 
 ## Getting started
 
-Requires Python 3.10+.
+Requires Node.js 22 LTS or later.
 
 ```bash
-pip install -r requirements-dev.txt
-python -m pytest
+npm ci
+npm test
 ```
 
-Run the example calculation:
+Build the sample daily plan and print its explanation:
 
 ```bash
-python src/dairy_platform/feed_management/calculator.py
+npm run example
+# 2026-10-01 site-1/lactating-group: 100 head x rate 1 = 100 feed units; x ration lactating-standard v1 = 2000; mixer load 1000
 ```
 
 ## Quality gates
@@ -143,9 +150,9 @@ This repository adopts the shared standards from the [engineering playbook](http
 
 | Gate | Source | Bar |
 |---|---|---|
-| Lint and formatting | Playbook [reusable Python CI](https://github.com/ahmedoraby-eng/engineering-playbook/blob/main/.github/workflows/reusable-python-ci.yml) — `ruff check`, `ruff format --check` | No findings |
-| Tests | Same workflow — `pytest` on Python 3.10–3.13 | All pass |
-| Coverage | Same workflow — `pytest-cov` | ≥ 90% of `dairy_platform` |
+| Typecheck, lint, format, build | Playbook [reusable Node CI](https://github.com/ahmedoraby-eng/engineering-playbook/blob/main/.github/workflows/reusable-node-ci.yml) — `npm run check`: strict `tsc`, ESLint (`typescript-eslint` strict), Prettier | No findings |
+| Tests and coverage | Same workflow — `npm run test:coverage` (Vitest) | All pass; ≥ 90% lines, branches, functions and statements |
+| Dependency audit | Same workflow — `npm audit --omit=dev` | No high or critical issues |
 | AI guardrails | Playbook [`ai-guard`](https://github.com/ahmedoraby-eng/engineering-playbook#ai-guard), tuned in [`.ai-guard.toml`](.ai-guard.toml) | AI assistance disclosed; tests with AI-written code; `human-reviewed` label for AI-assisted changes to tenancy or CI |
 
 The local wiring is two short files: [`ci.yml`](.github/workflows/ci.yml) and [`ai-guard.yml`](.github/workflows/ai-guard.yml).
@@ -153,7 +160,7 @@ The local wiring is two short files: [`ci.yml`](.github/workflows/ci.yml) and [`
 Run the same checks locally:
 
 ```bash
-ruff check . && ruff format --check . && pytest --cov=dairy_platform
+npm run check && npm run test:coverage
 ```
 
 ## Roadmap
