@@ -1,0 +1,9 @@
+# AI guardrail policy for this repository (see the engineering playbook's ai-guard).
+[policy]
+source_globs = ["src/*"]
+test_globs = ["tests/*"]
+# Tenant isolation is the platform's most sensitive boundary: AI-assisted changes to it,
+# to CI, or to this policy need a line-by-line human review (the `human-reviewed` label).
+protected_globs = ["*tenancy*", ".github/workflows/*", ".ai-guard.toml"]
+human_review_label = "human-reviewed"
+max_ai_changed_lines = 400
