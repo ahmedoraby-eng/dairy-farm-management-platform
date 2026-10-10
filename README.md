@@ -139,14 +139,16 @@ python src/dairy_platform/feed_management/calculator.py
 
 ## Quality gates
 
-Every push and pull request runs [CI](.github/workflows/ci.yml):
+This repository adopts the shared standards from the [engineering playbook](https://github.com/ahmedoraby-eng/engineering-playbook) rather than maintaining its own copies. Every pull request runs:
 
-| Gate | Tool | Bar |
+| Gate | Source | Bar |
 |---|---|---|
-| Lint | `ruff check` (errors, imports, bug-prone patterns, modern syntax) | No findings |
-| Formatting | `ruff format --check` | Consistent formatting |
-| Tests | `pytest` on Python 3.10–3.13 | All pass |
-| Coverage | `pytest-cov` | ≥ 90% of `dairy_platform` |
+| Lint and formatting | Playbook [reusable Python CI](https://github.com/ahmedoraby-eng/engineering-playbook/blob/main/.github/workflows/reusable-python-ci.yml) — `ruff check`, `ruff format --check` | No findings |
+| Tests | Same workflow — `pytest` on Python 3.10–3.13 | All pass |
+| Coverage | Same workflow — `pytest-cov` | ≥ 90% of `dairy_platform` |
+| AI guardrails | Playbook [`ai-guard`](https://github.com/ahmedoraby-eng/engineering-playbook#ai-guard), tuned in [`.ai-guard.toml`](.ai-guard.toml) | AI assistance disclosed; tests with AI-written code; `human-reviewed` label for AI-assisted changes to tenancy or CI |
+
+The local wiring is two short files: [`ci.yml`](.github/workflows/ci.yml) and [`ai-guard.yml`](.github/workflows/ai-guard.yml).
 
 Run the same checks locally:
 

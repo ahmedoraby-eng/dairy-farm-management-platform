@@ -39,4 +39,4 @@ Thresholds were global, so small sites alerted constantly.
 
 ## AI-assisted contributions
 
-AI tools are welcome. The author stays accountable: read and understand every generated line, cover it with tests, never paste secrets or customer data into a prompt, and tick the AI box in the PR template.
+The playbook's `ai-guard` check enforces this on every pull request (policy in [`.ai-guard.toml`](.ai-guard.toml)). AI tools are welcome. The author stays accountable: read and understand every generated line, cover it with tests, never paste secrets or customer data into a prompt, and tick the AI box in the PR template.

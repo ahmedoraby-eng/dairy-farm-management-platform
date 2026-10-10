@@ -1,0 +1,13 @@
+name: AI guardrails
+
+on:
+  pull_request:
+    types: [opened, edited, synchronize, reopened, labeled, unlabeled]
+
+permissions:
+  contents: read
+
+jobs:
+  ai-guard:
+    # Shared guardrails from the engineering playbook; rules tuned in .ai-guard.toml.
+    uses: ahmedoraby-eng/engineering-playbook/.github/workflows/reusable-ai-guard.yml@main
