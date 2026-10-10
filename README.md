@@ -153,7 +153,7 @@ This repository adopts the shared standards from the [engineering playbook](http
 | Typecheck, lint, format, build | Playbook [reusable Node CI](https://github.com/ahmedoraby-eng/engineering-playbook/blob/main/.github/workflows/reusable-node-ci.yml) — `npm run check`: strict `tsc`, ESLint (`typescript-eslint` strict), Prettier | No findings |
 | Tests and coverage | Same workflow — `npm run test:coverage` (Vitest) | All pass; ≥ 90% lines, branches, functions and statements |
 | Dependency audit | Same workflow — `npm audit --omit=dev` | No high or critical issues |
-| AI guardrails | Playbook [`ai-guard`](https://github.com/ahmedoraby-eng/engineering-playbook#ai-guard), tuned in [`.ai-guard.toml`](.ai-guard.toml) | AI assistance disclosed; tests with AI-written code; `human-reviewed` label for AI-assisted changes to tenancy or CI |
+| AI guardrails | Playbook [`ai-guard`](https://github.com/ahmedoraby-eng/engineering-playbook#ai-guard), tuned in [`.ai-guard.toml`](.ai-guard.toml) | AI assistance disclosed; tests with AI-written code; `human-reviewed` label for AI-assisted changes to tenancy, the feeding calculation or CI |
 
 The local wiring is two short files: [`ci.yml`](.github/workflows/ci.yml) and [`ai-guard.yml`](.github/workflows/ai-guard.yml).
 

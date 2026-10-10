@@ -5,6 +5,7 @@ Notable changes to the platform, newest first. Each entry links to the pull requ
 ## Unreleased
 
 ### Changed
+- `ai-guard` now also requires the `human-reviewed` label for AI-assisted changes to the feeding calculation (`src/feed-management`), not only tenancy and CI.
 - **The platform is now TypeScript on Node.js 22 LTS** ([ADR-004](docs/adr/004-language-and-stack.md), [#3](https://github.com/ahmedoraby-eng/dairy-farm-management-platform/pull/3)). The feed management and tenancy logic was ported with the same rules and error messages, and now also rejects non-finite quantities, fractional ration versions and invalid feeding dates.
 - CI moved to the playbook's reusable Node workflow: strict typecheck, ESLint, Prettier, build, Vitest with a 90% gate on lines, branches, functions and statements, and an audit of production dependencies.
 
