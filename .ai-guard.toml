@@ -2,8 +2,9 @@
 [policy]
 source_globs = ["src/*"]
 test_globs = ["tests/*"]
-# Tenant isolation is the platform's most sensitive boundary: AI-assisted changes to it,
-# to CI, or to this policy need a line-by-line human review (the `human-reviewed` label).
-protected_globs = ["*tenancy*", ".github/workflows/*", ".ai-guard.toml"]
+# Tenant isolation and the feeding calculation are the platform's most sensitive areas:
+# AI-assisted changes to them, to CI, or to this policy need a line-by-line human review
+# (the `human-reviewed` label).
+protected_globs = ["*tenancy*", "src/feed-management/*", ".github/workflows/*", ".ai-guard.toml"]
 human_review_label = "human-reviewed"
 max_ai_changed_lines = 400
